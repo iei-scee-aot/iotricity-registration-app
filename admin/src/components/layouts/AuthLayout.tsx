@@ -11,15 +11,16 @@ const AuthLayout = () => {
     return <Navigate to="/sign-in" replace />;
   }
   return (
-    <div className="flex items-center justify-center min-h-screen bg-muted">
+    <div className="flex min-h-screen w-full bg-[#0a0a0a]">
       <SidebarProvider>
         <TooltipProvider>
         <AppSidebar />
-        <main>
-          <SidebarTrigger />
+        <main className="flex-1 flex flex-col min-w-0 overflow-hidden relative">
+          <div className="absolute top-4 left-4 z-50">
+            <SidebarTrigger className="text-gray-400 hover:text-white" />
+          </div>
           <Outlet />
         </main>
-
         </TooltipProvider>
       </SidebarProvider>
     </div>

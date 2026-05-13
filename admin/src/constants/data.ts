@@ -12,7 +12,7 @@ export const sidebar_data: SidebarDataProps[] = [
         id: 2,
         title: "Users Management",
         icon: Users,
-        link: "/users-management"
+        link: "/users"
     },
     {
         id: 3,
