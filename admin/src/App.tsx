@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Users from "./components/pages/Users";
 import Teams from "./components/pages/Teams";
 import Projects from "./components/pages/Projects";
+import ErrorPage from "./components/pages/ErrorPage";
 
 const queryClinet = new QueryClient({
   defaultOptions: {
@@ -20,11 +21,12 @@ const queryClinet = new QueryClient({
 const router = createBrowserRouter([
   {
     path: "/sign-in",
-    element: <SignInPage />
+    element: <SignInPage />,
   },
   {
     path: "/",
     element: <AuthLayout />,
+    errorElement: <ErrorPage />,
     children: [
       {
         index: true,
