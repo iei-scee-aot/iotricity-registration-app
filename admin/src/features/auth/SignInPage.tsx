@@ -30,7 +30,12 @@ const SignInPage = () => {
 const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault(); 
     //TODO: Handle sign in
-    console.log(form.username, form.password);
+    const { username, password } = form;
+
+    const trimmedUsername = username.trim();
+    const trimmedPassword = password.trim();    
+    
+    console.log(trimmedUsername, trimmedPassword);
   };
 
   return (
@@ -64,16 +69,17 @@ const handleSubmit = async (e: React.FormEvent) => {
 
                 <Field className="space-y-1">
                   <FieldLabel htmlFor="password">Password</FieldLabel>
-                  <Input 
+                  <Input
                     id="password" 
                     type="password" 
                     placeholder="••••••••" 
                     required 
+                    minLength={8}
                     value={form.password}
                     onChange={(e) => setForm({...form, password: e.target.value})}
                   />
                   <FieldDescription className="text-xs">
-                    Must be at least 8 characters long.
+                    Must be at least 6 characters long.
                   </FieldDescription>
                 </Field>
 
