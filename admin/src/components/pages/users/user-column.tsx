@@ -89,13 +89,14 @@ export const columns: ColumnDef<UserDetails>[] = [
   },
   {
     accessorKey: "actions",
-    header: "Actions",
+    header: () => <div className="text-center">Actions</div>,
     cell: ({ row }) => {
-      
       return (
-        <Button onClick={() => console.log(row.original)} variant={"ghost"} className="h-8 w-8 p-0">
-          <Pen />
-        </Button>
+        <div className="flex justify-center">
+          <Button onClick={() => console.log(row.original)} variant={"ghost"} className="h-8 w-8 p-0">
+            <Pen size={16} />
+          </Button>
+        </div>
       )}
   }
 ]

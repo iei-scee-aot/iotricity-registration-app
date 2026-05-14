@@ -1,4 +1,4 @@
-import { DataTable } from "@/components/ui/data-table"
+import { DataTable } from "@/components/pages/users/user-data-table"
 import { useQuery } from "@tanstack/react-query"
 import { fetchUserDetails } from "@/lib/api"
 import { columns } from "./user-column"
@@ -12,6 +12,20 @@ const Users = () => {
     queryFn: fetchUserDetails,
     staleTime: 1000 * 60 * 5, 
   });
+
+  const formatedData = data?.map((user: TeamMember) => {
+    return {
+      _id: user._id,  
+      name: user.name,
+      googleEmail: user.googleEmail,
+      googleProfilePicture: user.googleProfilePicture,
+      collegeEmail: user.collegeEmail,
+      rollNumber: user.rollNumber,
+      semester: user.semester,
+      department: user.department,
+      phoneNumber: user.phoneNumber,
+    }
+  }) || [];
 
   return (
     <div className="flex-1 flex flex-col min-w-0 bg-[#0a0a0a] min-h-screen text-gray-200">
@@ -30,7 +44,7 @@ const Users = () => {
           ) : isLoading ? (
             <DataTableSkeleton />
           ) : (
-            <DataTable columns={columns} data={data} />
+            <DataTable columns={columns} data={formatedData} />
           )}
         </div>
       </div>
