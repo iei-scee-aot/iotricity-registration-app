@@ -7,6 +7,8 @@ import Teams from "./components/pages/teams/Teams";
 import Projects from "./components/pages/projects/Projects";
 import ErrorPage from "./components/pages/ErrorPage";
 import Users from "./components/pages/users/Users";
+import { Toaster } from "react-hot-toast";
+import TeamView from "./components/pages/teams/TeamView";
 
 const queryClinet = new QueryClient({
   defaultOptions: {
@@ -41,6 +43,10 @@ const router = createBrowserRouter([
         element: <Teams />
       },
       {
+        path: "teams/:teamName",
+        element: <TeamView />
+      },
+      {
         path: "projects",
         element: <Projects />
       }
@@ -51,6 +57,7 @@ const router = createBrowserRouter([
 const App = () => {
   return (
     <QueryClientProvider client={queryClinet}>
+      <Toaster />
       <RouterProvider router={router} />
     </QueryClientProvider>
   );
