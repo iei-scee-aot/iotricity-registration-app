@@ -1,9 +1,9 @@
-import { columns } from "../ui/columns"
-import { DataTable } from "../ui/data-table"
+import { DataTable } from "@/components/ui/data-table"
 import { useQuery } from "@tanstack/react-query"
 import { fetchUserDetails } from "@/lib/api"
-import { DataTableSkeleton } from "../skeleton/DataTableSkeleton"
-import ErrorCard from "../ui/error"
+import { columns } from "./user-column"
+import ErrorCard from "@/components/ui/error"
+import { DataTableSkeleton } from "@/components/skeleton/DataTableSkeleton"
 
 const Users = () => {
 

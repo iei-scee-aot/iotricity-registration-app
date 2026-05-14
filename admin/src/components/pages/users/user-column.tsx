@@ -1,6 +1,6 @@
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
 import type { ColumnDef } from "@tanstack/react-table"
-import { Avatar, AvatarFallback, AvatarImage } from "./avatar";
-import { Button } from "./button";
 import { ArrowUpDown, Pen } from "lucide-react";
 
 export type UserDetails = {
