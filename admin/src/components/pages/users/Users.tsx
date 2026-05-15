@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query"
 import { fetchUserDetails } from "@/lib/api"
 import { columns } from "./user-column"
 import ErrorCard from "@/components/ui/error"
-import { DataTableSkeleton } from "@/components/skeleton/DataTableSkeleton"
+import { UserPageSkeleton } from "@/components/skeleton/UserPageSkeleton"
 
 const Users = () => {
 
@@ -42,7 +42,7 @@ const Users = () => {
           {isError ? (
             <ErrorCard onClick={refetch} errorMessage="Failed to load participants" error={error} isRefetching={isRefetching} />
           ) : isLoading ? (
-            <DataTableSkeleton />
+            <UserPageSkeleton />
           ) : (
             <DataTable columns={columns} data={formatedData} />
           )}
