@@ -17,6 +17,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query"
 import axios from "axios"
 import toast from "react-hot-toast"
 import { Link } from "react-router-dom"
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
 
 
 export type TeamDetails = {
@@ -34,8 +35,9 @@ const TeamActionsCell = ({ row }: { row: TeamDetails }) => {
     const queryClient = useQueryClient();
     const [isVerifyOpen, setIsVerifyOpen] = useState(false);
     const [isDeleteOpen, setIsDeleteOpen] = useState(false);
+    const isStatusButtonVisible = row.registrationStatus === "Registered" || row.registrationStatus === "Verified";
 
-    const isDisable = row.registrationStatus === "Registered" || row.registrationStatus === "Verified" || row.registrationStatus === "Paid";
+    const isDeleteButtonDisabled = row.registrationStatus === "Registered" || row.registrationStatus === "Verified" || row.registrationStatus === "Paid";
 
     const deleteMutation = useMutation({
         mutationFn: async (props: TeamDetails) =>{
@@ -88,12 +90,19 @@ const TeamActionsCell = ({ row }: { row: TeamDetails }) => {
         <div className="flex justify-center">
 
             {/* status update button */}
-            <Dialog open={isVerifyOpen} onOpenChange={setIsVerifyOpen}>
-                <DialogTrigger asChild>
-                <Button disabled={row.registrationStatus === "Verified"} className="cursor-pointer hover:text-green-400" variant="ghost">
-                    {row.registrationStatus === "Verified" ? <CheckCheck className="text-emerald-400" /> : <Check />}
-                </Button>
-                </DialogTrigger>
+            {isStatusButtonVisible && <Dialog open={isVerifyOpen} onOpenChange={setIsVerifyOpen}>
+                <Tooltip>
+                    <TooltipTrigger asChild>
+                        <DialogTrigger asChild>
+                            <Button disabled={row.registrationStatus === "Verified"} className="cursor-pointer hover:text-green-400" variant="ghost">
+                                {row.registrationStatus === "Verified" ? <CheckCheck className="text-emerald-400" /> : <Check />}
+                            </Button>
+                        </DialogTrigger>
+                    </TooltipTrigger>
+                    <TooltipContent side="left">
+                        <p>Verify Status</p>
+                    </TooltipContent>
+                </Tooltip>
                 <DialogContent className="sm:max-w-sm">
                 <DialogHeader>
                     <DialogTitle>Verify</DialogTitle>
@@ -112,17 +121,17 @@ const TeamActionsCell = ({ row }: { row: TeamDetails }) => {
                     )}
                 </DialogFooter>
                 </DialogContent>
-            </Dialog>
+            </Dialog>}
 
             {/* team detail view button */}
             
             <Button variant={"ghost"} className="flex flex-row gap-4 cursor-pointer hover:text-indigo-400 h-8 w-8 p-0">
-                <Link to={`/teams/${row.teamName}`} ><Eye /></Link>
+                <Link to={`/teams/${row.teamName}`} state={{ team: row }}><Eye /></Link>
             </Button>
              
             {/* delete button */}
 
-            {!isDisable && (
+            {!isDeleteButtonDisabled && (
                 <Dialog open={isDeleteOpen} onOpenChange={setIsDeleteOpen}>
                 <DialogTrigger asChild>
                 <Button className="cursor-pointer hover:text-rose-400" variant="ghost">
