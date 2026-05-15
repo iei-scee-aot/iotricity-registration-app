@@ -1,3 +1,4 @@
+import { useState } from "react"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import type { ColumnDef } from "@tanstack/react-table"
@@ -31,6 +32,9 @@ export type TeamDetails = {
 
 const TeamActionsCell = ({ row }: { row: TeamDetails }) => {
     const queryClient = useQueryClient();
+    const [isVerifyOpen, setIsVerifyOpen] = useState(false);
+    const [isDeleteOpen, setIsDeleteOpen] = useState(false);
+
     const isDisable = row.registrationStatus === "Registered" || row.registrationStatus === "Verified" || row.registrationStatus === "Paid";
 
     const deleteMutation = useMutation({
@@ -46,6 +50,7 @@ const TeamActionsCell = ({ row }: { row: TeamDetails }) => {
             return response.data
         },
         onSuccess: () => {
+            setIsDeleteOpen(false);
             queryClient.invalidateQueries({ queryKey: ["teams"] });
             toast.success("Team deleted successfully", {
                 position: "top-center"
@@ -66,6 +71,7 @@ const TeamActionsCell = ({ row }: { row: TeamDetails }) => {
             return response.data
         },
         onSuccess: () => {
+            setIsVerifyOpen(false);
             queryClient.invalidateQueries({ queryKey: ["teams"] });
             toast.success("Team updated successfully", {
                 position: "top-center"
@@ -80,9 +86,36 @@ const TeamActionsCell = ({ row }: { row: TeamDetails }) => {
 
     return (
         <div className="flex justify-center">
-            <Button disabled={row.registrationStatus === "Verified"} onClick={() => updateMutation.mutate(row)} variant={"ghost"} className="flex flex-row gap-4 cursor-pointer hover:text-indigo-400 h-8 w-8 p-0">
-                {row.registrationStatus === "Verified" ? <CheckCheck className="text-emerald-400" /> : <Check />}
-            </Button>
+
+            {/* status update button */}
+            <Dialog open={isVerifyOpen} onOpenChange={setIsVerifyOpen}>
+                <DialogTrigger asChild>
+                <Button disabled={row.registrationStatus === "Verified"} className="cursor-pointer hover:text-green-400" variant="ghost">
+                    {row.registrationStatus === "Verified" ? <CheckCheck className="text-emerald-400" /> : <Check />}
+                </Button>
+                </DialogTrigger>
+                <DialogContent className="sm:max-w-sm">
+                <DialogHeader>
+                    <DialogTitle>Verify</DialogTitle>
+                    <DialogDescription>
+                        Are you sure you want to verify the team "{row.teamName}"
+                    </DialogDescription>
+                </DialogHeader>
+                <DialogFooter>
+                    <DialogClose asChild>
+                    <Button className="cursor-pointer" variant="outline">Cancel</Button>
+                    </DialogClose>
+                    {updateMutation.isPending ? (
+                        <Button disabled className="cursor-pointer" variant="outline">Verifying...</Button>
+                    ) : (
+                        <Button onClick={() => updateMutation.mutate(row)} className="bg-green-500/60 hover:bg-green-500/80 text-white cursor-pointer" type="submit">Verify</Button>
+                    )}
+                </DialogFooter>
+                </DialogContent>
+            </Dialog>
+
+            {/* team detail view button */}
+            
             <Button variant={"ghost"} className="flex flex-row gap-4 cursor-pointer hover:text-indigo-400 h-8 w-8 p-0">
                 <Link to={`/teams/${row.teamName}`} ><Eye /></Link>
             </Button>
@@ -90,7 +123,7 @@ const TeamActionsCell = ({ row }: { row: TeamDetails }) => {
             {/* delete button */}
 
             {!isDisable && (
-                <Dialog >
+                <Dialog open={isDeleteOpen} onOpenChange={setIsDeleteOpen}>
                 <DialogTrigger asChild>
                 <Button className="cursor-pointer hover:text-rose-400" variant="ghost">
                     <Trash2 />
@@ -100,7 +133,7 @@ const TeamActionsCell = ({ row }: { row: TeamDetails }) => {
                 <DialogHeader>
                     <DialogTitle>Delete</DialogTitle>
                     <DialogDescription>
-                        Are you sure you want to delete the team
+                        Are you sure you want to delete the team "{row.teamName}"
                     </DialogDescription>
                 </DialogHeader>
                 <DialogFooter>
