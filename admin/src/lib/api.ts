@@ -12,3 +12,15 @@ export const getAllTeams = async () => {
     return response.data;
       
 }
+
+export const getAllProjects = async () => {
+    const response: { data: Project[] } = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/projects`)
+
+    return response.data;
+}
+
+export const getTeamBySecret = async (secret: string) => {
+    const response: { data: Team } = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/teams/${secret}`)
+
+    return response.data;
+}

@@ -6,6 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 import { TeamStatCard } from "./TeamStatCard";
 import { Users, Wallet, Clock, UserMinus } from "lucide-react";
 import TeamPageSkeleton from "@/components/skeleton/TeamPageSkeleton";
+import { formatedText } from "@/lib/utils";
 
 const Teams = () => {
   const { data: teams, isLoading, isError, error, refetch, isRefetching } = useQuery({
@@ -23,7 +24,7 @@ const Teams = () => {
       teamLead: team.teamLeader.name,
       teamLeadEmail: team.teamLeader.googleEmail,
       totalTeamMembers: (team.teamMembers.length + 1).toString(),
-      registrationStatus: (team.registrationStatus.charAt(0).toUpperCase() + team.registrationStatus.slice(1).toLowerCase()) as TeamDetails["registrationStatus"],
+      registrationStatus: formatedText(team.registrationStatus) as TeamDetails["registrationStatus"],
     }
   }) || [];
 

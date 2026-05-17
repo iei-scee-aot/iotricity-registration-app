@@ -1,5 +1,4 @@
 import { useState } from "react"
-import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import type { ColumnDef } from "@tanstack/react-table"
 import { Check, CheckCheck, Eye, Trash2, Users2 } from "lucide-react"
@@ -18,6 +17,7 @@ import axios from "axios"
 import toast from "react-hot-toast"
 import { Link } from "react-router-dom"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
+import StatusBadge from "@/components/ui/status-badge"
 
 
 export type TeamDetails = {
@@ -59,6 +59,7 @@ const TeamActionsCell = ({ row }: { row: TeamDetails }) => {
             })
         },
         onError: (error) => {
+            setIsDeleteOpen(false);
             toast.error(error.message, {
                 position: "top-center"
             })
@@ -162,19 +163,6 @@ const TeamActionsCell = ({ row }: { row: TeamDetails }) => {
     );
 }
 
-function registrationStatusBadge(registrationStatus: string) {
-    switch (registrationStatus.toLowerCase()) {
-        case "paid":
-            return <Badge className="bg-blue-500/10 text-blue-400 border-blue-500/20 hover:bg-blue-500/10">Paid</Badge>
-        case "unregistered":
-            return <Badge className="bg-rose-500/10 text-rose-400 border-rose-500/20 hover:bg-rose-500/10">Unregistered</Badge>
-        case "verified":
-            return <Badge className="bg-emerald-500/10 text-emerald-400 border-emerald-500/20 hover:bg-emerald-500/10">Verified</Badge>
-        case "registered":
-            return <Badge className="bg-amber-500/10 text-amber-400 border-amber-500/20">Registered</Badge>
-    }
-}
-
 export const teamColumn: ColumnDef<TeamDetails>[] = [
     {
         accessorKey: "teamName",
@@ -211,7 +199,7 @@ export const teamColumn: ColumnDef<TeamDetails>[] = [
     {
         accessorKey: "registrationStatus",
         header: () => <div className="text-center">Registration Status</div>,
-        cell: ({ row }) => <div className="flex justify-center">{registrationStatusBadge(row.original.registrationStatus)}</div>
+        cell: ({ row }) => <div className="flex justify-center"><StatusBadge status={row.original.registrationStatus} /></div>
     },
     {
         accessorKey: "actions",

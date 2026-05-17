@@ -1,9 +1,9 @@
 import { useLocation, useNavigate } from "react-router-dom"
-import { Badge } from "@/components/ui/badge"
 import { DataTable } from "@/components/pages/users/user-data-table"
 import { teamMembersColumns, type TeamMemberDetails } from "./team-members-column"
 import { ArrowLeft } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import StatusBadge from "@/components/ui/status-badge"
 
 function TeamView() {
   const location = useLocation();
@@ -26,16 +26,6 @@ function TeamView() {
     ...team.teamMembers.map((member: any) => ({ ...member, role: "Member" }))
   ];
 
-  const getStatusColor = (status: string) => {
-    switch(status.toLowerCase()) {
-      case "paid": return "bg-blue-500/10 text-blue-400 border-blue-500/20";
-      case "verified": return "bg-emerald-500/10 text-emerald-400 border-emerald-500/20";
-      case "unregistered": return "bg-rose-500/10 text-rose-400 border-rose-500/20";
-      case "registered": return "bg-amber-500/10 text-amber-400 border-amber-500/20";
-      default: return "bg-gray-500/10 text-gray-400 border-gray-500/20";
-    }
-  }
-
   return (
     <div className="flex-1 flex flex-col min-w-0 bg-[#0a0a0a] min-h-screen text-gray-200">
       {/* Top Header */}
@@ -57,9 +47,7 @@ function TeamView() {
               <p className="text-sm text-gray-500 font-mono">Secret: {team.teamSecret}</p>
             </div>
             <div>
-               <Badge className={`px-4 py-1.5 text-sm ${getStatusColor(team.registrationStatus)}`}>
-                 {team.registrationStatus}
-               </Badge>
+               <StatusBadge status={team.registrationStatus} />
             </div>
           </div>
 

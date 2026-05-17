@@ -22,6 +22,19 @@ declare global {
         teamMembers: TeamMember[];
         razorpayOrderId?: string;
     }
+
+    interface Project {
+        _id: string;
+        teamSecret: string;
+        round: number;
+        projectName: string;
+        projectThemes: string[];
+        projectTracks: string[];
+        githubUrl: string;
+        presentationUrl: string;
+        demoVideoUrl: string;
+        status: string 
+    }
 }
 
 export {}

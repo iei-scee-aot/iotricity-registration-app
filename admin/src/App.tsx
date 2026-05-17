@@ -9,6 +9,7 @@ import ErrorPage from "./components/pages/ErrorPage";
 import Users from "./components/pages/users/Users";
 import { Toaster } from "react-hot-toast";
 import TeamView from "./components/pages/teams/TeamView";
+import ProjectView from "./components/pages/projects/ProjectView";
 
 const queryClinet = new QueryClient({
   defaultOptions: {
@@ -49,6 +50,10 @@ const router = createBrowserRouter([
       {
         path: "projects",
         element: <Projects />
+      },
+      {
+        path: "projects/:teamSecret",
+        element: <ProjectView />
       }
     ]
   }
