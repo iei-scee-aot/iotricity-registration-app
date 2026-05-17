@@ -35,7 +35,7 @@ const TeamActionsCell = ({ row }: { row: TeamDetails }) => {
     const queryClient = useQueryClient();
     const [isVerifyOpen, setIsVerifyOpen] = useState(false);
     const [isDeleteOpen, setIsDeleteOpen] = useState(false);
-    const isStatusButtonVisible = row.registrationStatus === "Registered" || row.registrationStatus === "Verified";
+    const isStatusButtonVisible = row.registrationStatus === "Registered" || row.registrationStatus === "Verified" || row.registrationStatus === "Paid";
 
     const isDeleteButtonDisabled = row.registrationStatus === "Registered" || row.registrationStatus === "Verified" || row.registrationStatus === "Paid";
 
