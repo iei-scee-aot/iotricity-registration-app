@@ -1,27 +1,21 @@
 import type { SidebarDataProps } from "@/types/type";
-import { FolderKanban, LayoutDashboard, Users, UsersRound } from "lucide-react";
+import { FolderKanban, Users, UsersRound } from "lucide-react";
 
 export const sidebar_data: SidebarDataProps[] = [
     {
         id: 1,
-        title: "Dashboard",
-        icon: LayoutDashboard,
+        title: "Users Management",
+        icon: Users,
         link: "/"
     },
     {
         id: 2,
-        title: "Users Management",
-        icon: Users,
-        link: "/users"
-    },
-    {
-        id: 3,
         title: "Teams",
         icon: UsersRound,
         link: "/teams"
     },
     {
-        id: 4,
+        id: 3,
         title: "Projects",
         icon: FolderKanban,
         link: "/projects"

@@ -1,7 +1,6 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import SignInPage from "./features/auth/SignInPage";
 import AuthLayout from "./components/layouts/AuthLayout";
-import Dashboard from "./components/pages/dashboard/Dashboard";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Teams from "./components/pages/teams/Teams";
 import Projects from "./components/pages/projects/Projects";
@@ -33,10 +32,6 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Dashboard />,
-      },
-      {
-        path: "users",
         element: <Users />
       },
       {
