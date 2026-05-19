@@ -1,7 +1,7 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import type { ColumnDef } from "@tanstack/react-table"
-import { ArrowUpDown, Pen } from "lucide-react";
+import { ArrowUpDown } from "lucide-react";
 
 export type UserDetails = {
     _id: string,
@@ -86,17 +86,5 @@ export const columns: ColumnDef<UserDetails>[] = [
   {
     accessorKey: "phoneNumber",
     header: "Phone Number",
-  },
-  {
-    accessorKey: "actions",
-    header: () => <div className="text-center">Actions</div>,
-    cell: ({ row }) => {
-      return (
-        <div className="flex justify-center">
-          <Button onClick={() => console.log(row.original)} variant={"ghost"} className="h-8 w-8 p-0">
-            <Pen size={16} />
-          </Button>
-        </div>
-      )}
   }
 ]
